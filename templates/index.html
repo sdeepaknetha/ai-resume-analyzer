@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Resume Analyzer</title>
+</head>
+<body>
+
+    <h1>AI Resume Analyzer</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="resume" required>
+        <button type="submit">Analyze Resume</button>
+    </form>
+
+    {% if role %}
+        <h2>Best Matched Role: {{ role }}</h2>
+
+        <h3>Match Score: {{ score }}%</h3>
+
+        <!-- Progress Bar -->
+        <div style="width: 400px; background-color: #ddd;">
+            <div style="width: {{ score }}%; background-color: {{ color }}; color: white; text-align: center;">
+                {{ score }}%
+            </div>
+        </div>
+
+        <h3>AI Evaluation Summary:</h3>
+        <p><b>{{ summary }}</b></p>
+
+        <h4>Missing Skills:</h4>
+
+        {% if missing and missing|length > 0 %}
+            <ul>
+                {% for skill in missing %}
+                    <li>{{ skill }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p style="color: green; font-weight: bold;">
+                🎉 No missing skills! Excellent match.
+            </p>
+        {% endif %}
+    {% endif %}
+
+</body>
+</html>
