@@ -10,36 +10,23 @@
     "machine learning"
   ],
 
-  "Data Analyst": [
+  "Data Scientist": [
     "python",
     "pandas",
     "numpy",
-    "data analysis",
-    "excel",
-    "sql",
-    "data visualization",
-    "statistics"
-  ],
-
-  "Machine Learning Engineer": [
-    "python",
     "machine learning",
-    "tensorflow",
-    "scikit-learn",
-    "data analysis",
-    "deep learning",
-    "numpy",
-    "pandas"
+    "data visualization",
+    "statistics",
+    "deep learning"
   ],
 
-  "Backend Developer": [
-    "python",
-    "flask",
-    "django",
-    "api",
-    "sql",
+  "Web Developer": [
+    "html",
+    "css",
+    "javascript",
+    "react",
+    "node",
     "git",
-    "database",
-    "docker"
+    "bootstrap"
   ]
 }
