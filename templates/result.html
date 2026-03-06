@@ -1,36 +1,137 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Analysis Result</title>
+<title>AI Resume Analyzer</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#f4f6f9;
+text-align:center;
+padding:40px;
+}
+
+.container{
+background:white;
+padding:30px;
+border-radius:10px;
+width:600px;
+margin:auto;
+box-shadow:0px 5px 20px rgba(0,0,0,0.1);
+}
+
+h1{
+color:#333;
+}
+
+.score{
+font-size:28px;
+font-weight:bold;
+color:#4CAF50;
+}
+
+.progress{
+width:100%;
+background:#ddd;
+border-radius:20px;
+margin:20px 0;
+}
+
+.progress-bar{
+height:20px;
+background:#4CAF50;
+border-radius:20px;
+}
+
+.section{
+margin-top:30px;
+text-align:left;
+}
+
+ul{
+padding-left:20px;
+}
+
+li{
+margin:8px 0;
+}
+
+.skill{
+background:#ffebee;
+padding:8px;
+border-radius:5px;
+display:inline-block;
+margin:5px;
+}
+
+.suggestion{
+background:#e3f2fd;
+padding:8px;
+border-radius:5px;
+display:block;
+margin:5px 0;
+}
+
+button{
+margin-top:30px;
+padding:12px 25px;
+background:#4CAF50;
+border:none;
+color:white;
+font-size:16px;
+border-radius:5px;
+cursor:pointer;
+}
+
+button:hover{
+background:#45a049;
+}
+
+</style>
+
 </head>
 
 <body>
 
-<h2>Analysis Result</h2>
+<div class="container">
 
-<h3>Best Matched Role: {{ role }}</h3>
+<h1>AI Resume Analysis Result</h1>
 
-<h3>Match Score: {{ score }}%</h3>
+<h2>Best Matched Role</h2>
+<h1>{{ role }}</h1>
 
-<h3>Missing Skills:</h3>
+<div class="score">Match Score: {{ score }}%</div>
 
-<ul>
+<div class="progress">
+<div class="progress-bar" style="width: {{ score }}%"></div>
+</div>
+
+<div class="section">
+
+<h3>⚠ Missing Skills</h3>
+
 {% for skill in missing %}
-<li>{{ skill }}</li>
+<span class="skill">{{ skill }}</span>
 {% endfor %}
-</ul>
 
-<h3>AI Suggestions:</h3>
+</div>
 
-<ul>
+<div class="section">
+
+<h3>🧠 AI Suggestions</h3>
+
 {% for s in suggestions %}
-<li>{{ s }}</li>
+<div class="suggestion">{{ s }}</div>
 {% endfor %}
-</ul>
 
-<br>
+</div>
 
-<a href="/">Analyze Another Resume</a>
+<a href="/">
+<button>Analyze Another Resume</button>
+</a>
+
+</div>
 
 </body>
 </html>
