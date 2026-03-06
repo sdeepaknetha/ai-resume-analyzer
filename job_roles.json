@@ -1,14 +1,23 @@
 {
   "Python Developer": [
     "python",
-    "flask",
     "django",
-    "sql",
+    "flask",
     "sqlite",
     "machine learning",
     "data analysis",
     "object oriented programming",
     "git"
+  ],
+
+  "Data Scientist": [
+    "python",
+    "machine learning",
+    "data analysis",
+    "pandas",
+    "numpy",
+    "statistics",
+    "deep learning"
   ],
 
   "Web Developer": [
@@ -17,19 +26,7 @@
     "javascript",
     "react",
     "node",
-    "mongodb",
-    "bootstrap",
-    "git"
-  ],
-
-  "Data Scientist": [
-    "python",
-    "pandas",
-    "numpy",
-    "machine learning",
-    "deep learning",
-    "data analysis",
-    "matplotlib",
-    "statistics"
+    "git",
+    "api"
   ]
 }
