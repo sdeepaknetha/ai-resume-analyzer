@@ -1,50 +1,73 @@
 import json
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
+import re
+import os
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
 
+# -------------------------------
+# DOWNLOAD NLTK DATA (Cloud Safe)
+# -------------------------------
 
-# -------- Load Job Roles --------
-def load_job_roles():
-    with open("job_roles.json", "r") as file:
-        return json.load(file)
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
 
+try:
+    nltk.data.find('corpora/stopwords')
+except LookupError:
+    nltk.download('stopwords')
 
-# -------- Match Resume --------
+# -------------------------------
+# LOAD JOB ROLES FROM JSON
+# -------------------------------
+
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+json_path = os.path.join(BASE_DIR, "job_roles.json")
+
+with open(json_path, "r", encoding="utf-8") as file:
+    JOB_ROLES = json.load(file)
+
+# -------------------------------
+# CLEAN TEXT FUNCTION
+# -------------------------------
+
+def clean_text(text):
+    text = text.lower()
+    text = re.sub(r'[^a-zA-Z\s]', ' ', text)
+    tokens = word_tokenize(text)
+    stop_words = set(stopwords.words('english'))
+    filtered = [word for word in tokens if word not in stop_words]
+    return filtered
+
+# -------------------------------
+# MATCH RESUME FUNCTION
+# -------------------------------
+
 def match_resume(resume_text):
-    job_roles = load_job_roles()
+    tokens = clean_text(resume_text)
+    resume_words = set(tokens)
 
-    roles = list(job_roles.keys())
-    descriptions = list(job_roles.values())
+    best_role = None
+    best_score = 0
+    missing_skills = []
 
-    documents = descriptions + [resume_text]
+    for role, skills in JOB_ROLES.items():
+        skills_set = set(skill.lower() for skill in skills)
 
-    vectorizer = TfidfVectorizer(stop_words="english")
-    tfidf_matrix = vectorizer.fit_transform(documents)
+        matched = resume_words.intersection(skills_set)
+        score = (len(matched) / len(skills_set)) * 100
 
-    similarity = cosine_similarity(tfidf_matrix[-1], tfidf_matrix[:-1])
+        if score > best_score:
+            best_score = score
+            best_role = role
+            missing_skills = list(skills_set - matched)
 
-    best_match_index = similarity.argmax()
-    best_match_role = roles[best_match_index]
-    match_score = round(similarity[0][best_match_index] * 100, 2)
+    best_score = round(best_score, 2)
 
-    # -------- Professional Skill Matching --------
-    skill_keywords = [
-        "python",
-        "flask",
-        "django",
-        "sql",
-        "sqlite",
-        "machine learning",
-        "api",
-        "object oriented programming"
-    ]
+    # If no missing skills
+    if len(missing_skills) == 0:
+        missing_skills = ["🎉 No missing skills! Excellent match."]
 
-    resume_text_lower = resume_text.lower()
-
-    missing_skills = [
-        skill for skill in skill_keywords
-        if skill in descriptions[best_match_index].lower()
-        and skill not in resume_text_lower
-    ]
-
-    return best_match_role, match_score, missing_skills
+    return best_role, best_score, missing_skills
