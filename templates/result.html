@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Analysis Result</title>
+<title>Result</title>
 </head>
 
 <body>
 
-<h2>Best Matched Role: {{role}}</h2>
+<h2>Analysis Result</h2>
 
-<h3>Match Score: {{score}}%</h3>
+<h3>Best Matched Role: {{ role }}</h3>
+
+<h3>Match Score: {{ score }}%</h3>
 
 <h3>Missing Skills:</h3>
 
 <ul>
+
 {% for skill in missing %}
-<li>{{skill}}</li>
+
+<li>{{ skill }}</li>
+
 {% endfor %}
+
 </ul>
 
 <br>
