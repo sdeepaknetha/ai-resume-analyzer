@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request
-import json
 from resume_parser import extract_text_from_resume
-import os
+import json
 
 app = Flask(__name__)
 
@@ -24,46 +23,43 @@ def analyze():
     file = request.files["resume"]
 
     if file.filename == "":
-        return "No selected file"
+        return "No file selected"
 
-    text = extract_text_from_resume(file).lower()
+    # Extract resume text
+    text = extract_text_from_resume(file)
 
-    best_role = "None"
+    best_role = None
     best_score = 0
-    best_missing = []
-    role_scores = {}
+    missing_skills = []
 
-    for role, skills in job_roles.items():
+    for role in job_roles:
 
-        matched = 0
+        skills = job_roles[role]
+
+        found = 0
+        missing = []
 
         for skill in skills:
-            if skill.lower() in text:
-                matched += 1
 
-        score = int((matched / len(skills)) * 100)
+            if skill.lower() in text.lower():
+                found += 1
+            else:
+                missing.append(skill)
 
-        role_scores[role] = score
+        score = int((found / len(skills)) * 100)
 
         if score > best_score:
             best_score = score
             best_role = role
-            best_missing = [s for s in skills if s.lower() not in text]
-
-    # Sort roles for recommendation
-    sorted_roles = sorted(role_scores.items(), key=lambda x: x[1], reverse=True)
-
-    recommendations = [r[0] for r in sorted_roles[1:3]]
+            missing_skills = missing
 
     return render_template(
         "result.html",
         role=best_role,
         score=best_score,
-        missing=best_missing,
-        recommendations=recommendations
+        missing=missing_skills
     )
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
