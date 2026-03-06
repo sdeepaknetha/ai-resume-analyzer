@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
-<title>Analysis Result</title>
+<title>AI Resume Result</title>
+
 <link rel="stylesheet" href="/static/style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
@@ -11,35 +15,89 @@
 
 <div class="container">
 
-<h1>AI Resume Analysis Result</h1>
+<h1>🧠 AI Resume Analysis</h1>
 
 <h2>Best Matched Role</h2>
-<p>{{ role }}</p>
+
+<p class="highlight">{{ role }}</p>
 
 <h2>Match Score</h2>
+
 <p>{{ score }}%</p>
 
-<h2>Missing Skills</h2>
+<h2>ATS Resume Score</h2>
+
+<p>{{ ats }}%</p>
+
+<h2>Matched Skills</h2>
 
 <ul>
+
+{% for skill in matched %}
+<li>{{ skill }}</li>
+
+{% endfor %}
+
+</ul>
+
+<h2>⚠ Missing Skills</h2>
+
+<ul>
+
 {% for skill in missing %}
 <li>{{ skill }}</li>
+
 {% endfor %}
+
 </ul>
 
-<h2>AI Suggestions</h2>
+<h2>🤖 AI Suggestions</h2>
 
 <ul>
+
 {% for s in suggestions %}
 <li>{{ s }}</li>
+
 {% endfor %}
+
 </ul>
 
-<br>
+<h2>Skill Match Chart</h2>
+
+<canvas id="chart"></canvas>
+
+<br><br>
 
 <a href="/">Analyze Another Resume</a>
 
 </div>
+
+<script>
+
+var matched = {{ matched|length }};
+var missing = {{ missing|length }};
+
+new Chart(document.getElementById("chart"),{
+
+type:"doughnut",
+
+data:{
+
+labels:["Matched Skills","Missing Skills"],
+
+datasets:[{
+
+data:[matched,missing],
+
+backgroundColor:["#4CAF50","#FF5252"]
+
+}]
+
+}
+
+})
+
+</script>
 
 </body>
 </html>
