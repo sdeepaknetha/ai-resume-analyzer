@@ -1,41 +1,29 @@
-from flask import Flask, render_template, request
-from resume_parser import analyze_resume
+from flask import send_file
+import os
+from reportlab.pdfgen import canvas
 
-app = Flask(__name__)
+@app.route('/download/<int:analysis_id>')
+def download_pdf(analysis_id):
 
-@app.route('/')
-def index():
-    return render_template("index.html")
+    analysis = ResumeAnalysis.query.get_or_404(analysis_id)
 
+    filename = f"report_{analysis_id}.pdf"
 
-@app.route('/analyze', methods=['POST'])
-def analyze():
+    c = canvas.Canvas(filename)
 
-    if 'resume' not in request.files:
-        return "No file uploaded"
+    c.setFont("Helvetica", 14)
+    c.drawString(100, 800, "AI Resume Analysis Report")
 
-    file = request.files['resume']
+    c.setFont("Helvetica", 12)
+    c.drawString(100, 760, f"Best Role: {analysis.role}")
+    c.drawString(100, 740, f"Match Score: {analysis.score}%")
+    c.drawString(100, 720, f"Date: {analysis.date}")
 
-    if file.filename == '':
-        return "No selected file"
+    c.save()
 
-    resume_text = file.read().decode('utf-8')
-
-    result = analyze_resume(resume_text)
-
-    return render_template(
-        "result.html",
-        score=result["score"],
-        role=result["role"],
-        skills=result["skills"],
-        missing=result["missing"]
+    return send_file(
+        filename,
+        as_attachment=True,
+        download_name=filename,
+        mimetype='application/pdf'
     )
-
-
-@app.route('/admin')
-def admin():
-    return render_template("admin.html")
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
