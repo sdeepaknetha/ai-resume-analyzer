@@ -1,18 +1,34 @@
 import pdfplumber
 import docx
 
-def extract_text_from_resume(file_path):
 
-    text = ""
+def extract_text_from_resume(file):
 
-    if file_path.endswith(".pdf"):
-        with pdfplumber.open(file_path) as pdf:
+    filename = file.filename.lower()
+
+    # PDF
+    if filename.endswith(".pdf"):
+
+        text = ""
+
+        with pdfplumber.open(file) as pdf:
+
             for page in pdf.pages:
                 text += page.extract_text()
 
-    elif file_path.endswith(".docx"):
-        doc = docx.Document(file_path)
+        return text
+
+    # DOCX
+    elif filename.endswith(".docx"):
+
+        doc = docx.Document(file)
+
+        text = ""
+
         for para in doc.paragraphs:
             text += para.text
 
-    return text.lower()
+        return text
+
+    else:
+        return ""
