@@ -1,74 +1,51 @@
 from flask import Flask, render_template, request
-import os
-import json
 import pdfplumber
 import docx
 
 app = Flask(__name__)
 
-# Load job roles
-with open("job_roles.json") as f:
-    job_roles = json.load(f)
+roles = {
+    "Web Developer": ["html","css","javascript","react","node","git","bootstrap"],
+    "Data Scientist": ["python","pandas","numpy","machine learning","statistics","deep learning","data visualization"]
+}
 
-
-# Extract text from resume
 def extract_text(file):
+    text = ""
 
-    filename = file.filename.lower()
-
-    if filename.endswith(".pdf"):
-        text = ""
+    if file.filename.endswith(".pdf"):
         with pdfplumber.open(file) as pdf:
             for page in pdf.pages:
-                text += page.extract_text() or ""
-        return text
+                text += page.extract_text()
 
-    elif filename.endswith(".docx"):
+    elif file.filename.endswith(".docx"):
         doc = docx.Document(file)
-        text = ""
         for para in doc.paragraphs:
             text += para.text
-        return text
 
-    else:
-        return ""
+    return text.lower()
 
 
-# AI suggestions
-def generate_suggestions(missing_skills):
+def analyze_resume(text):
+
+    best_role = ""
+    best_score = 0
+    missing_skills = []
+
+    for role, skills in roles.items():
+
+        found = [skill for skill in skills if skill in text]
+        score = int((len(found) / len(skills)) * 100)
+
+        if score > best_score:
+            best_score = score
+            best_role = role
+            missing_skills = list(set(skills) - set(found))
 
     suggestions = []
-
     for skill in missing_skills:
+        suggestions.append(f"Learn {skill} to improve your profile")
 
-        if skill == "node":
-            suggestions.append("Learn Node.js for backend development")
-
-        elif skill == "javascript":
-            suggestions.append("Practice JavaScript projects")
-
-        elif skill == "git":
-            suggestions.append("Learn Git and upload projects to GitHub")
-
-        elif skill == "machine learning":
-            suggestions.append("Study Machine Learning using Python")
-
-        elif skill == "pandas":
-            suggestions.append("Learn Pandas for data analysis")
-
-        elif skill == "numpy":
-            suggestions.append("Learn NumPy for numerical computing")
-
-        elif skill == "data visualization":
-            suggestions.append("Learn Matplotlib or Seaborn")
-
-        elif skill == "statistics":
-            suggestions.append("Study Statistics for data science")
-
-        else:
-            suggestions.append(f"Learn {skill}")
-
-    return suggestions
+    return best_role, best_score, missing_skills, suggestions
 
 
 @app.route("/")
@@ -79,44 +56,20 @@ def home():
 @app.route("/analyze", methods=["POST"])
 def analyze():
 
-    if "resume" not in request.files:
-        return "No file uploaded"
-
     file = request.files["resume"]
 
-    if file.filename == "":
-        return "No file selected"
+    text = extract_text(file)
 
-    text = extract_text(file).lower()
-
-    best_role = "None"
-    best_score = 0
-    missing_skills = []
-
-    for role in job_roles:
-
-        skills = job_roles[role]
-
-        score = sum(1 for skill in skills if skill.lower() in text)
-
-        if score > best_score:
-            best_score = score
-            best_role = role
-            missing_skills = [s for s in skills if s.lower() not in text]
-
-    match_score = int((best_score / len(job_roles[best_role])) * 100) if best_role != "None" else 0
-
-    suggestions = generate_suggestions(missing_skills)
+    role, score, missing, suggestions = analyze_resume(text)
 
     return render_template(
         "result.html",
-        role=best_role,
-        score=match_score,
-        missing=missing_skills,
+        role=role,
+        score=score,
+        missing=missing,
         suggestions=suggestions
     )
 
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
