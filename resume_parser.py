@@ -1,6 +1,7 @@
 import pdfplumber
 import docx
 
+
 def extract_text_from_resume(file):
 
     text = ""
