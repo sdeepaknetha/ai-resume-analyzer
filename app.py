@@ -1,12 +1,15 @@
 from flask import Flask, render_template, request
+import os
 import json
 from resume_parser import extract_text_from_resume
-import os
 
 app = Flask(__name__)
 
+UPLOAD_FOLDER = "uploads"
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
 # Load job roles
-with open("job_roles.json") as f:
+with open("job_roles.json", "r") as f:
     job_roles = json.load(f)
 
 
@@ -17,7 +20,6 @@ def home():
 
 @app.route("/analyze", methods=["POST"])
 def analyze():
-
     if "resume" not in request.files:
         return "No file uploaded"
 
@@ -26,31 +28,26 @@ def analyze():
     if file.filename == "":
         return "No file selected"
 
-    text = extract_text_from_resume(file)
+    filepath = os.path.join(UPLOAD_FOLDER, file.filename)
+    file.save(filepath)
+
+    text = extract_text_from_resume(filepath)
 
     best_role = "None"
     best_score = 0
     missing_skills = []
 
-    for role, skills in job_roles.items():
+    for role in job_roles:
+        skills = job_roles[role]
 
-        score = 0
-        found = []
-
-        for skill in skills:
-            if skill.lower() in text:
-                score += 1
-                found.append(skill)
+        score = sum(1 for skill in skills if skill.lower() in text.lower())
 
         if score > best_score:
             best_score = score
             best_role = role
-            missing_skills = [s for s in skills if s not in found]
+            missing_skills = [s for s in skills if s.lower() not in text.lower()]
 
-    if best_role != "None":
-        match_score = int((best_score / len(job_roles[best_role])) * 100)
-    else:
-        match_score = 0
+    match_score = int((best_score / len(job_roles[best_role])) * 100) if best_role != "None" else 0
 
     return render_template(
         "result.html",
