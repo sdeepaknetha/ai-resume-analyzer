@@ -2,58 +2,29 @@
 <html>
 
 <head>
-<title>Resume Analysis Result</title>
+
+<title>Analysis Result</title>
 
 <style>
 
 body{
-    font-family: Arial;
-    background-color:#f4f6f8;
-    text-align:center;
-    padding:40px;
+font-family:Arial;
+background:#f2f2f2;
+text-align:center;
+padding:40px;
 }
 
 .container{
-    background:white;
-    padding:30px;
-    border-radius:10px;
-    width:500px;
-    margin:auto;
-    box-shadow:0px 0px 10px rgba(0,0,0,0.1);
-}
-
-h2{
-    color:#333;
-}
-
-h3{
-    color:#444;
+background:white;
+padding:40px;
+border-radius:10px;
+width:500px;
+margin:auto;
+box-shadow:0px 0px 10px rgba(0,0,0,0.2);
 }
 
 ul{
-    list-style-type:none;
-    padding:0;
-}
-
-li{
-    background:#f1f1f1;
-    margin:5px;
-    padding:8px;
-    border-radius:5px;
-}
-
-.button{
-    display:inline-block;
-    margin-top:20px;
-    padding:10px 20px;
-    background:#007BFF;
-    color:white;
-    text-decoration:none;
-    border-radius:5px;
-}
-
-.button:hover{
-    background:#0056b3;
+text-align:left;
 }
 
 </style>
@@ -73,24 +44,18 @@ li{
 <h3>Missing Skills:</h3>
 
 <ul>
+
 {% for skill in missing %}
+
 <li>{{ skill }}</li>
+
 {% endfor %}
+
 </ul>
 
 <br>
 
-<h3>Alternative Career Roles:</h3>
-
-<ul>
-{% for r in recommendations %}
-<li>{{ r }}</li>
-{% endfor %}
-</ul>
-
-<br>
-
-<a class="button" href="/">Analyze Another Resume</a>
+<a href="/">Analyze Another Resume</a>
 
 </div>
 
