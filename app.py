@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
-import os
 import json
 from resume_parser import extract_text_from_resume
+import os
 
 app = Flask(__name__)
 
@@ -34,18 +34,18 @@ def analyze():
 
     for role, skills in job_roles.items():
 
+        score = 0
         found = []
 
         for skill in skills:
-            if skill.lower() in text.lower():
+            if skill.lower() in text:
+                score += 1
                 found.append(skill)
-
-        score = len(found)
 
         if score > best_score:
             best_score = score
             best_role = role
-            missing_skills = list(set(skills) - set(found))
+            missing_skills = [s for s in skills if s not in found]
 
     if best_role != "None":
         match_score = int((best_score / len(job_roles[best_role])) * 100)
