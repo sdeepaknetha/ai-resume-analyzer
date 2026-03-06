@@ -1,15 +1,12 @@
 from flask import Flask, render_template, request
-import os
 import json
 from resume_parser import extract_text_from_resume
+import os
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER = "uploads"
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-
 # Load job roles
-with open("job_roles.json", "r") as f:
+with open("job_roles.json") as f:
     job_roles = json.load(f)
 
 
@@ -20,40 +17,50 @@ def home():
 
 @app.route("/analyze", methods=["POST"])
 def analyze():
+
     if "resume" not in request.files:
         return "No file uploaded"
 
     file = request.files["resume"]
 
     if file.filename == "":
-        return "No file selected"
+        return "No selected file"
 
-    filepath = os.path.join(UPLOAD_FOLDER, file.filename)
-    file.save(filepath)
-
-    text = extract_text_from_resume(filepath)
+    text = extract_text_from_resume(file).lower()
 
     best_role = "None"
     best_score = 0
-    missing_skills = []
+    best_missing = []
+    role_scores = {}
 
-    for role in job_roles:
-        skills = job_roles[role]
+    for role, skills in job_roles.items():
 
-        score = sum(1 for skill in skills if skill.lower() in text.lower())
+        matched = 0
+
+        for skill in skills:
+            if skill.lower() in text:
+                matched += 1
+
+        score = int((matched / len(skills)) * 100)
+
+        role_scores[role] = score
 
         if score > best_score:
             best_score = score
             best_role = role
-            missing_skills = [s for s in skills if s.lower() not in text.lower()]
+            best_missing = [s for s in skills if s.lower() not in text]
 
-    match_score = int((best_score / len(job_roles[best_role])) * 100) if best_role != "None" else 0
+    # Sort roles for recommendation
+    sorted_roles = sorted(role_scores.items(), key=lambda x: x[1], reverse=True)
+
+    recommendations = [r[0] for r in sorted_roles[1:3]]
 
     return render_template(
         "result.html",
         role=best_role,
-        score=match_score,
-        missing=missing_skills
+        score=best_score,
+        missing=best_missing,
+        recommendations=recommendations
     )
 
 
