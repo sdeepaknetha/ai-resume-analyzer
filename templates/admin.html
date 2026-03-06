@@ -1,33 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin Dashboard</title>
+<title>Admin</title>
 </head>
+
 <body>
 
-<h1>Stored Resume Analyses</h1>
+<h2>Admin Dashboard</h2>
 
-<table border="1" cellpadding="10">
-    <tr>
-        <th>ID</th>
-        <th>Role</th>
-        <th>Score</th>
-        <th>Date</th>
-        <th>Download</th>
-    </tr>
-
-    {% for r in results %}
-    <tr>
-        <td>{{ r.id }}</td>
-        <td>{{ r.best_role }}</td>
-        <td>{{ r.match_score }}%</td>
-        <td>{{ r.created_at }}</td>
-        <td>
-            <a href="/download/{{ r.id }}">Download PDF</a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+<p>Resume Analyzer Admin Panel</p>
 
 </body>
 </html>
