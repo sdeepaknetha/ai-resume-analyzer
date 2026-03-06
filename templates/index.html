@@ -1,14 +1,54 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+
 <title>AI Resume Analyzer</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f2f2f2;
+text-align:center;
+padding:40px;
+}
+
+.container{
+background:white;
+padding:40px;
+border-radius:10px;
+width:500px;
+margin:auto;
+box-shadow:0px 0px 10px rgba(0,0,0,0.2);
+}
+
+button{
+padding:10px 20px;
+background:#007BFF;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+button:hover{
+background:#0056b3;
+}
+
+</style>
+
 </head>
 
 <body>
 
-<h2>Upload Your Resume</h2>
+<div class="container">
 
-<form action="/analyze" method="post" enctype="multipart/form-data">
+<h2>AI Resume Analyzer</h2>
+
+<p>Upload your Resume (PDF or DOCX)</p>
+
+<form action="/analyze" method="POST" enctype="multipart/form-data">
 
 <input type="file" name="resume" required>
 
@@ -18,5 +58,8 @@
 
 </form>
 
+</div>
+
 </body>
+
 </html>
