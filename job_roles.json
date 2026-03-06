@@ -1,8 +1,8 @@
 {
   "Python Developer": [
     "python",
-    "django",
     "flask",
+    "django",
     "sqlite",
     "git",
     "object oriented programming",
@@ -10,21 +10,36 @@
     "machine learning"
   ],
 
-  "Web Developer": [
-    "html",
-    "css",
-    "javascript",
-    "react",
-    "node",
-    "git"
-  ],
-
-  "Data Scientist": [
+  "Data Analyst": [
     "python",
-    "machine learning",
-    "data analysis",
     "pandas",
     "numpy",
+    "data analysis",
+    "excel",
+    "sql",
+    "data visualization",
     "statistics"
+  ],
+
+  "Machine Learning Engineer": [
+    "python",
+    "machine learning",
+    "tensorflow",
+    "scikit-learn",
+    "data analysis",
+    "deep learning",
+    "numpy",
+    "pandas"
+  ],
+
+  "Backend Developer": [
+    "python",
+    "flask",
+    "django",
+    "api",
+    "sql",
+    "git",
+    "database",
+    "docker"
   ]
 }
