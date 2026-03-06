@@ -1,61 +1,49 @@
-from flask import Flask, render_template, request
-from resume_parser import extract_text_from_resume
-import json
+body{
+font-family: Arial;
+background:#f2f6ff;
+text-align:center;
+}
 
-app = Flask(__name__)
+.container{
 
-with open("job_roles.json") as f:
-    job_roles = json.load(f)
+width:500px;
+margin:auto;
+margin-top:80px;
 
-def generate_suggestion(skill):
-    suggestions = {
-        "node": "Learn Node.js for backend development",
-        "django": "Learn Django for Python web development",
-        "machine learning": "Study Machine Learning using Scikit-Learn",
-        "data analysis": "Learn Pandas and NumPy for data analysis",
-        "git": "Learn Git and GitHub for version control",
-        "docker": "Learn Docker for containerization"
-    }
+background:white;
 
-    return suggestions.get(skill.lower(), f"Consider learning {skill}")
+padding:40px;
 
-@app.route("/")
-def home():
-    return render_template("index.html")
+border-radius:10px;
 
-@app.route("/analyze", methods=["POST"])
-def analyze():
+box-shadow:0px 0px 10px rgba(0,0,0,0.2);
+}
 
-    file = request.files["resume"]
+h1{
+color:#333;
+}
 
-    text = extract_text_from_resume(file)
+button{
 
-    best_role = "Unknown"
-    best_score = 0
-    missing_skills = []
+padding:10px 20px;
 
-    for role in job_roles:
+background:#007BFF;
 
-        skills = job_roles[role]
+color:white;
 
-        score = sum(1 for skill in skills if skill.lower() in text.lower())
+border:none;
 
-        if score > best_score:
-            best_score = score
-            best_role = role
-            missing_skills = [s for s in skills if s.lower() not in text.lower()]
+border-radius:5px;
 
-    match_score = int((best_score / len(job_roles[best_role])) * 100)
+cursor:pointer;
 
-    suggestions = [generate_suggestion(skill) for skill in missing_skills]
+font-size:16px;
+}
 
-    return render_template(
-        "result.html",
-        role=best_role,
-        score=match_score,
-        missing=missing_skills,
-        suggestions=suggestions
-    )
+button:hover{
+background:#0056b3;
+}
 
-if __name__ == "__main__":
-    app.run(debug=True)
+ul{
+text-align:left;
+}
