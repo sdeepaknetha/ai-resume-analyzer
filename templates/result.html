@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>AI Resume Analyzer</title>
+
+<title>AI Resume Result</title>
 
 <style>
 
 body{
-font-family: Arial;
-background:#f4f6f9;
+font-family:Arial;
+background:#f2f4ff;
 text-align:center;
-padding:40px;
 }
 
-.container{
+.card{
 background:white;
+width:500px;
+margin:auto;
+margin-top:80px;
 padding:30px;
 border-radius:10px;
-width:600px;
-margin:auto;
-box-shadow:0px 5px 20px rgba(0,0,0,0.1);
+box-shadow:0px 0px 10px rgba(0,0,0,0.1);
 }
 
 h1{
@@ -27,65 +28,21 @@ color:#333;
 
 .score{
 font-size:28px;
-font-weight:bold;
-color:#4CAF50;
-}
-
-.progress{
-width:100%;
-background:#ddd;
-border-radius:20px;
-margin:20px 0;
-}
-
-.progress-bar{
-height:20px;
-background:#4CAF50;
-border-radius:20px;
-}
-
-.section{
-margin-top:30px;
-text-align:left;
+color:green;
 }
 
 ul{
-padding-left:20px;
+text-align:left;
 }
 
-li{
-margin:8px 0;
-}
-
-.skill{
-background:#ffebee;
-padding:8px;
-border-radius:5px;
-display:inline-block;
-margin:5px;
-}
-
-.suggestion{
-background:#e3f2fd;
-padding:8px;
-border-radius:5px;
-display:block;
-margin:5px 0;
-}
-
-button{
-margin-top:30px;
-padding:12px 25px;
-background:#4CAF50;
-border:none;
+.btn{
+margin-top:20px;
+padding:10px 20px;
+background:#007BFF;
 color:white;
-font-size:16px;
+border:none;
 border-radius:5px;
-cursor:pointer;
-}
-
-button:hover{
-background:#45a049;
+text-decoration:none;
 }
 
 </style>
@@ -94,42 +51,33 @@ background:#45a049;
 
 <body>
 
-<div class="container">
+<div class="card">
 
 <h1>AI Resume Analysis Result</h1>
 
 <h2>Best Matched Role</h2>
-<h1>{{ role }}</h1>
+<p><b>{{role}}</b></p>
 
-<div class="score">Match Score: {{ score }}%</div>
+<h2>Match Score</h2>
+<p class="score">{{score}}%</p>
 
-<div class="progress">
-<div class="progress-bar" style="width: {{ score }}%"></div>
-</div>
+<h2>⚠ Missing Skills</h2>
 
-<div class="section">
-
-<h3>⚠ Missing Skills</h3>
-
+<ul>
 {% for skill in missing %}
-<span class="skill">{{ skill }}</span>
+<li>{{skill}}</li>
 {% endfor %}
+</ul>
 
-</div>
+<h2>🧠 AI Suggestions</h2>
 
-<div class="section">
-
-<h3>🧠 AI Suggestions</h3>
-
+<ul>
 {% for s in suggestions %}
-<div class="suggestion">{{ s }}</div>
+<li>{{s}}</li>
 {% endfor %}
+</ul>
 
-</div>
-
-<a href="/">
-<button>Analyze Another Resume</button>
-</a>
+<a href="/" class="btn">Analyze Another Resume</a>
 
 </div>
 
