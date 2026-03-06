@@ -1,32 +1,36 @@
 {
-  "Python Developer": [
-    "python",
-    "flask",
-    "django",
-    "sqlite",
-    "git",
-    "object oriented programming",
-    "data analysis",
-    "machine learning"
-  ],
+ "Web Developer": [
+  "html",
+  "css",
+  "javascript",
+  "react",
+  "node",
+  "git"
+ ],
 
-  "Data Scientist": [
-    "python",
-    "pandas",
-    "numpy",
-    "machine learning",
-    "data visualization",
-    "statistics",
-    "deep learning"
-  ],
+ "Python Developer": [
+  "python",
+  "django",
+  "flask",
+  "sqlite",
+  "object oriented programming",
+  "git"
+ ],
 
-  "Web Developer": [
-    "html",
-    "css",
-    "javascript",
-    "react",
-    "node",
-    "git",
-    "bootstrap"
-  ]
+ "Data Scientist": [
+  "python",
+  "pandas",
+  "numpy",
+  "machine learning",
+  "data analysis",
+  "data visualization"
+ ],
+
+ "Cloud Engineer": [
+  "aws",
+  "docker",
+  "kubernetes",
+  "linux",
+  "devops"
+ ]
 }
