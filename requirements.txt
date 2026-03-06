@@ -1,4 +1,2 @@
 Flask
 gunicorn
-pdfplumber
-python-docx
