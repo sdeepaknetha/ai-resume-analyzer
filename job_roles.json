@@ -4,9 +4,18 @@
     "django",
     "flask",
     "sqlite",
-    "machine learning",
-    "data analysis",
+    "git",
     "object oriented programming",
+    "data analysis",
+    "machine learning"
+  ],
+
+  "Web Developer": [
+    "html",
+    "css",
+    "javascript",
+    "react",
+    "node",
     "git"
   ],
 
@@ -16,17 +25,6 @@
     "data analysis",
     "pandas",
     "numpy",
-    "statistics",
-    "deep learning"
-  ],
-
-  "Web Developer": [
-    "html",
-    "css",
-    "javascript",
-    "react",
-    "node",
-    "git",
-    "api"
+    "statistics"
   ]
 }
