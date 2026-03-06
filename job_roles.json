@@ -1,5 +1,38 @@
 {
-  "Python Developer": "python flask django api sql sqlite backend programming object oriented programming",
-  "Data Analyst": "python pandas numpy data analysis visualization excel sql statistics machine learning",
-  "Web Developer": "html css javascript react frontend backend flask api responsive design"
+    "Python Developer": [
+        "python",
+        "flask",
+        "django",
+        "sql",
+        "sqlite",
+        "api",
+        "machine learning",
+        "data analysis",
+        "object oriented programming",
+        "git"
+    ],
+
+    "Data Scientist": [
+        "python",
+        "machine learning",
+        "pandas",
+        "numpy",
+        "data analysis",
+        "statistics",
+        "deep learning",
+        "scikit-learn",
+        "data visualization"
+    ],
+
+    "Web Developer": [
+        "html",
+        "css",
+        "javascript",
+        "react",
+        "node",
+        "flask",
+        "django",
+        "bootstrap",
+        "sql"
+    ]
 }
