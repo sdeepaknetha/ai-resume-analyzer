@@ -1,13 +1,14 @@
 from flask import Flask, render_template, request
-from resume_parser import extract_text_from_resume
-import json
 import os
+import json
+from resume_parser import extract_text_from_resume
 
 app = Flask(__name__)
 
 # Load job roles
 with open("job_roles.json") as f:
     job_roles = json.load(f)
+
 
 @app.route("/")
 def home():
@@ -23,36 +24,38 @@ def analyze():
     file = request.files["resume"]
 
     if file.filename == "":
-        return "No selected file"
+        return "No file selected"
 
     text = extract_text_from_resume(file)
 
-    best_role = None
+    best_role = "None"
     best_score = 0
     missing_skills = []
 
     for role, skills in job_roles.items():
 
-        matched = []
+        found = []
 
         for skill in skills:
             if skill.lower() in text.lower():
-                matched.append(skill)
+                found.append(skill)
 
-        score = int((len(matched) / len(skills)) * 100)
+        score = len(found)
 
         if score > best_score:
             best_score = score
             best_role = role
-            missing_skills = list(set(skills) - set(matched))
+            missing_skills = list(set(skills) - set(found))
 
-    if best_role is None:
-        best_role = "No Match Found"
+    if best_role != "None":
+        match_score = int((best_score / len(job_roles[best_role])) * 100)
+    else:
+        match_score = 0
 
     return render_template(
         "result.html",
         role=best_role,
-        score=best_score,
+        score=match_score,
         missing=missing_skills
     )
 
