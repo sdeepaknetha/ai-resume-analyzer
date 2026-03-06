@@ -1,46 +1,21 @@
-import json
-import nltk
-from nltk.tokenize import word_tokenize
+import pdfplumber
+import docx
 
-# Download tokenizer safely
-try:
-    nltk.data.find('tokenizers/punkt')
-except LookupError:
-    nltk.download('punkt')
+def extract_text_from_resume(file):
 
-# Load job roles
-with open("job_roles.json") as f:
-    JOB_ROLES = json.load(f)
+    filename = file.filename.lower()
 
+    if filename.endswith(".pdf"):
+        with pdfplumber.open(file) as pdf:
+            text = ""
+            for page in pdf.pages:
+                text += page.extract_text()
+        return text
 
-def analyze_resume(text):
+    elif filename.endswith(".docx"):
+        doc = docx.Document(file)
+        text = "\n".join([p.text for p in doc.paragraphs])
+        return text
 
-    tokens = word_tokenize(text.lower())
-
-    best_role = None
-    best_score = 0
-    best_skills = []
-    missing_skills = []
-
-    for role, skills in JOB_ROLES.items():
-
-        found = []
-
-        for skill in skills:
-            if skill.lower() in tokens:
-                found.append(skill)
-
-        score = int((len(found) / len(skills)) * 100)
-
-        if score > best_score:
-            best_score = score
-            best_role = role
-            best_skills = found
-            missing_skills = list(set(skills) - set(found))
-
-    return {
-        "score": best_score,
-        "role": best_role,
-        "skills": best_skills,
-        "missing": missing_skills
-    }
+    else:
+        return file.read().decode("utf-8")
