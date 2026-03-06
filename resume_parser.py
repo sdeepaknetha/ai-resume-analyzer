@@ -2,9 +2,11 @@ import json
 import nltk
 from nltk.tokenize import word_tokenize
 
-# Download tokenizer automatically on server
-nltk.download('punkt')
-nltk.download('punkt_tab')
+# Download tokenizer safely
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
 
 # Load job roles
 with open("job_roles.json") as f:
