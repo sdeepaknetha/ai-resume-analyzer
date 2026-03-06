@@ -1,15 +1,18 @@
-def extract_text_from_resume(file):
+import pdfplumber
+import docx
 
-    try:
-        content = file.read()
+def extract_text_from_resume(file_path):
 
-        try:
-            text = content.decode("utf-8")
-        except:
-            text = content.decode("latin-1")
+    text = ""
 
-        return text.lower()
+    if file_path.endswith(".pdf"):
+        with pdfplumber.open(file_path) as pdf:
+            for page in pdf.pages:
+                text += page.extract_text()
 
-    except Exception as e:
-        print("Error reading file:", e)
-        return ""
+    elif file_path.endswith(".docx"):
+        doc = docx.Document(file_path)
+        for para in doc.paragraphs:
+            text += para.text
+
+    return text.lower()
