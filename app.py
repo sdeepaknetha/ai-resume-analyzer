@@ -64,15 +64,18 @@ def analyze():
     suggestions = [generate_suggestion(s) for s in missing_skills]
 
     return render_template(
-        "result.html",
-        role=best_role,
-        score=match_score,
-        matched=matched_skills,
-        missing=missing_skills,
-        suggestions=suggestions
+    "result.html",
+    role=best_role,
+    score=match_score,
+    ats_score=ats_score,
+    matched=matched_skills,
+    missing=missing_skills,
+    suggestions=suggestions
     )
+    
 
 
 if __name__ == "__main__":
     app.run()
+
 
