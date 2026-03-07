@@ -59,7 +59,7 @@ def analyze():
     ats_score = match_score + 10
 
     if ats_score > 100:
-    ats_score = 100
+        ats_score = 100
 
     suggestions = [generate_suggestion(s) for s in missing_skills]
 
@@ -77,5 +77,6 @@ def analyze():
 
 if __name__ == "__main__":
     app.run()
+
 
 
