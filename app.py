@@ -1,49 +1,72 @@
-body{
-font-family: Arial;
-background:#f2f6ff;
-text-align:center;
-}
+from flask import Flask, render_template, request
+from resume_parser import extract_text_from_resume
+import json
 
-.container{
+app = Flask(__name__)
 
-width:500px;
-margin:auto;
-margin-top:80px;
+with open("job_roles.json") as f:
+    job_roles = json.load(f)
 
-background:white;
 
-padding:40px;
+def generate_suggestion(skill):
 
-border-radius:10px;
+    suggestions = {
+        "node": "Learn Node.js for backend development",
+        "django": "Learn Django framework",
+        "machine learning": "Study Machine Learning",
+        "data analysis": "Learn Pandas and NumPy",
+        "git": "Learn Git and GitHub"
+    }
 
-box-shadow:0px 0px 10px rgba(0,0,0,0.2);
-}
+    return suggestions.get(skill.lower(), f"Consider learning {skill}")
 
-h1{
-color:#333;
-}
 
-button{
+@app.route("/")
+def home():
+    return render_template("index.html")
 
-padding:10px 20px;
 
-background:#007BFF;
+@app.route("/analyze", methods=["POST"])
+def analyze():
 
-color:white;
+    file = request.files["resume"]
 
-border:none;
+    text = extract_text_from_resume(file)
 
-border-radius:5px;
+    best_role = ""
+    best_score = 0
+    missing_skills = []
+    matched_skills = []
 
-cursor:pointer;
+    for role in job_roles:
 
-font-size:16px;
-}
+        skills = job_roles[role]
 
-button:hover{
-background:#0056b3;
-}
+        matches = [skill for skill in skills if skill.lower() in text]
 
-ul{
-text-align:left;
-}
+        score = len(matches)
+
+        if score > best_score:
+            best_score = score
+            best_role = role
+            matched_skills = matches
+            missing_skills = [s for s in skills if s not in matches]
+
+    total = len(job_roles[best_role])
+
+    match_score = int((best_score / total) * 100)
+
+    suggestions = [generate_suggestion(s) for s in missing_skills]
+
+    return render_template(
+        "result.html",
+        role=best_role,
+        score=match_score,
+        matched=matched_skills,
+        missing=missing_skills,
+        suggestions=suggestions
+    )
+
+
+if __name__ == "__main__":
+    app.run()
