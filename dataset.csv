@@ -1,11 +1,66 @@
 text,role
 html css javascript react frontend ui website,Frontend Developer
+html css javascript react redux ui responsive frontend,Frontend Developer
+html css bootstrap javascript ui ux frontend web,Frontend Developer
+react html css frontend web developer ui design,Frontend Developer
+javascript react nextjs frontend responsive ui web,Frontend Developer
+angular html css javascript frontend web ui design,Frontend Developer
+vue javascript html css frontend web developer,Frontend Developer
+react typescript html css frontend development,Frontend Developer
+html css sass javascript responsive frontend developer,Frontend Developer
+frontend html css javascript web development ui ux,Frontend Developer
+
 python django flask api backend database server,Backend Developer
-html css javascript react node mongodb fullstack web,Full Stack Developer
-python pandas numpy machine learning data analysis,Data Scientist
+nodejs express mongodb api backend server javascript,Backend Developer
 java spring backend microservices api database,Backend Developer
-react html css ui ux frontend web developer,Frontend Developer
-python machine learning deep learning ai tensorflow,AI Engineer
-html css javascript angular frontend ui,Frontend Developer
-python flask backend api server database,Backend Developer
-sql tableau powerbi data visualization analytics,Data Analyst
+python flask rest api backend development server,Backend Developer
+node express backend rest api mongodb server,Backend Developer
+django python backend database api development,Backend Developer
+spring boot java backend microservices database,Backend Developer
+php laravel backend web development database api,Backend Developer
+python backend api development flask server,Backend Developer
+nodejs express backend api database development,Backend Developer
+
+html css javascript react node mongodb fullstack web,Full Stack Developer
+react node express mongodb fullstack development,Full Stack Developer
+mern stack javascript react node mongodb web,Full Stack Developer
+mean stack angular node mongodb fullstack developer,Full Stack Developer
+fullstack javascript react backend frontend node,Full Stack Developer
+react node api mongodb fullstack web application,Full Stack Developer
+fullstack development html css javascript backend api,Full Stack Developer
+fullstack web developer react node express mongodb,Full Stack Developer
+fullstack engineer javascript react backend server,Full Stack Developer
+fullstack developer frontend backend api database,Full Stack Developer
+
+python pandas numpy machine learning data analysis,Data Scientist
+python machine learning deep learning ai tensorflow,Data Scientist
+data science python pandas numpy sklearn analysis,Data Scientist
+machine learning python ai data modeling prediction,Data Scientist
+deep learning tensorflow keras python ai model,Data Scientist
+python data science statistics machine learning,Data Scientist
+data analysis python pandas visualization insights,Data Scientist
+python ai machine learning neural networks data,Data Scientist
+data scientist python machine learning algorithms,Data Scientist
+data science python analytics machine learning models,Data Scientist
+
+python sql tableau powerbi data visualization analytics,Data Analyst
+data analysis sql excel tableau dashboard reporting,Data Analyst
+excel sql powerbi data analytics business intelligence,Data Analyst
+data analyst sql python visualization dashboards,Data Analyst
+business analysis data reporting tableau powerbi,Data Analyst
+data visualization python pandas tableau analytics,Data Analyst
+analytics sql reporting dashboard powerbi tableau,Data Analyst
+data analyst excel sql business insights reporting,Data Analyst
+sql data analysis visualization reporting dashboards,Data Analyst
+python sql analytics visualization business data,Data Analyst
+
+python machine learning ai deep learning tensorflow,AI Engineer
+artificial intelligence python machine learning models,AI Engineer
+deep learning neural networks pytorch tensorflow ai,AI Engineer
+ai engineer python machine learning data models,AI Engineer
+computer vision python deep learning ai models,AI Engineer
+natural language processing python ai machine learning,AI Engineer
+ai ml python tensorflow keras deep learning models,AI Engineer
+artificial intelligence neural networks machine learning,AI Engineer
+ai development python deep learning neural network,AI Engineer
+machine learning engineer python ai development,AI Engineer
