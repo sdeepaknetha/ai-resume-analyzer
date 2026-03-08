@@ -61,6 +61,20 @@
 
 <h2>🤖 AI Suggestions</h2>
 
+<h2>🧠 AI Resume Feedback</h2>
+
+<div class="ai-box">
+
+<p>Your resume is suitable for <b>{{ role }}</b> roles.</p>
+
+<p>Your ATS score of <b>{{ ats_score }}%</b> shows your resume is well optimized.</p>
+
+<p>However, improving missing skills can increase your job match.</p>
+
+<p>Recommended next step: Learn <b>{{ missing|join(", ") }}</b></p>
+
+</div> 
+
 <ul>
 {% for s in suggestions %}
 <li>{{ s }}</li>
