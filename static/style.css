@@ -1,75 +1,47 @@
 body{
-
 font-family: Arial;
-
-background: linear-gradient(135deg,#667eea,#764ba2);
-
+background:#f4f6f9;
 text-align:center;
-
-color:#333;
-
+padding:40px;
 }
 
 .container{
-
-width:700px;
-margin:auto;
-margin-top:60px;
 background:white;
-padding:40px;
-border-radius:12px;
-box-shadow:0px 4px 15px rgba(0,0,0,0.1);
-text-align:center;
-
+padding:30px;
+border-radius:10px;
+width:600px;
+margin:auto;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
 }
 
 h1{
+color:#333;
+}
 
-color:#444;
-
+.card{
+background:#f9f9f9;
+padding:20px;
+margin:15px 0;
+border-radius:8px;
 }
 
 button{
-
-padding:12px 25px;
-
-background:#667eea;
-
-color:white;
-
+padding:10px 20px;
 border:none;
-
-border-radius:6px;
-
-font-size:16px;
-
+background:#007BFF;
+color:white;
+border-radius:5px;
 cursor:pointer;
-
 }
 
 button:hover{
-
-background:#5a67d8;
-
+background:#0056b3;
 }
 
-ul{
-list-style-position: inside;
-padding:0;
-text-align:center;
+.download-btn{
+background:#28a745;
 }
 
-li{
-margin:5px 0;
-font-size:18px;
-}
-
-.highlight{
-
-font-size:22px;
-
-font-weight:bold;
-
-color:#667eea;
-
+.download-btn:hover{
+background:#1e7e34;
 }
