@@ -1,8 +1,12 @@
 # 🚀 AI Resume Analyzer
 
-AI Resume Analyzer is a web application that analyzes resumes and provides AI-powered career insights.
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![Flask](https://img.shields.io/badge/Framework-Flask-black)
+![Deployment](https://img.shields.io/badge/Deployment-Render-purple)
+![Frontend](https://img.shields.io/badge/Frontend-HTML%20CSS%20JS-orange)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-It predicts the best job role, calculates ATS score, identifies missing skills, and provides suggestions to improve resumes.
+AI Resume Analyzer is a web application that analyzes resumes and provides AI-powered career insights.
 
 ---
 
