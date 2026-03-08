@@ -1,7 +1,10 @@
 from flask import Flask, render_template, request
+import json
+
 from resume_parser import extract_text_from_resume
 from model import predict_role
-import json
+from keyword_extractor import extract_keywords
+from resume_feedback import generate_feedback
 
 app = Flask(__name__)
 
@@ -10,7 +13,7 @@ with open("job_roles.json") as f:
     job_roles = json.load(f)
 
 
-# AI suggestion generator
+# Suggestion generator
 def generate_suggestion(skill):
 
     suggestions = {
@@ -18,7 +21,7 @@ def generate_suggestion(skill):
         "django": "Learn Django framework",
         "machine learning": "Study Machine Learning basics",
         "data analysis": "Learn Pandas and NumPy",
-        "git": "Learn Git and GitHub for version control",
+        "git": "Learn Git and GitHub",
         "bootstrap": "Learn Bootstrap for responsive design"
     }
 
@@ -32,8 +35,6 @@ def home():
 
 @app.route("/analyze", methods=["POST"])
 def analyze():
-
-    ai_prediction = predict_role(text)
 
     file = request.files["resume"]
 
@@ -57,38 +58,42 @@ def analyze():
 
         role_scores.append((role, percent, matches, missing))
 
-    # Sort roles by score
     role_scores.sort(key=lambda x: x[1], reverse=True)
 
-    # Best role
     best_role, match_score, matched_skills, missing_skills = role_scores[0]
 
-    # Top 3 roles
     top_roles = role_scores[:3]
 
-    # ATS score
     ats_score = match_score + 10
 
     if ats_score > 100:
         ats_score = 100
 
-    # AI suggestions
     suggestions = [generate_suggestion(s) for s in missing_skills]
 
-  return render_template(
-    "result.html",
-    role=best_role,
-    score=match_score,
-    ats_score=ats_score,
-    matched=matched_skills,
-    missing=missing_skills,
-    suggestions=suggestions,
-    top_roles=top_roles,
-    ai_prediction=ai_prediction
-)
+    # Machine Learning prediction
+    ai_prediction = predict_role(text)
+
+    # Keyword extraction
+    keywords = extract_keywords(text)
+
+    # Resume feedback
+    feedback = generate_feedback(missing_skills)
+
+    return render_template(
+        "result.html",
+        role=best_role,
+        score=match_score,
+        ats_score=ats_score,
+        matched=matched_skills,
+        missing=missing_skills,
+        suggestions=suggestions,
+        top_roles=top_roles,
+        ai_prediction=ai_prediction,
+        keywords=keywords,
+        feedback=feedback
+    )
 
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
