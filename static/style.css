@@ -77,6 +77,17 @@ font-size:14px;
 color:#777;
 }
 
+.ai-box{
+background:#f0f7ff;
+padding:20px;
+border-radius:10px;
+margin-top:20px;
+}
+
+.dark-mode .ai-box{
+background:#2a2a2a;
+}
+
 .dark-mode .footer{
 color:#ccc;
 }
