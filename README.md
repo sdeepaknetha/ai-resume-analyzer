@@ -26,6 +26,21 @@ https://ai-resume-analyzer-eg8h.onrender.com/
 
 ---
 
+---
+
+## 🖥 Dashboard
+
+![Dashboard](dashboard.png)
+
+---
+
+## 📊 Resume Analysis Result
+
+![Result](result(1).png)
+![Result](result(2).png)
+![Result](result(3).png)
+![Result](result(4).png)
+
 ## 🛠 Tech Stack
 
 - Python
