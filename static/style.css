@@ -45,3 +45,16 @@ background:#28a745;
 .download-btn:hover{
 background:#1e7e34;
 }
+
+.dark{
+background:#121212;
+color:white;
+}
+
+.dark .container{
+background:#1e1e1e;
+}
+
+.dark .card{
+background:#2a2a2a;
+}
