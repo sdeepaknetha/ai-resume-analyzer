@@ -1,19 +1,18 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file
 import json
 
 from resume_parser import extract_text_from_resume
 from model import predict_role
 from keyword_extractor import extract_keywords
 from resume_feedback import generate_feedback
+from pdf_generator import create_pdf
 
 app = Flask(__name__)
 
-# Load job roles
 with open("job_roles.json") as f:
     job_roles = json.load(f)
 
 
-# Suggestion generator
 def generate_suggestion(skill):
 
     suggestions = {
@@ -71,14 +70,20 @@ def analyze():
 
     suggestions = [generate_suggestion(s) for s in missing_skills]
 
-    # Machine Learning prediction
     ai_prediction = predict_role(text)
 
-    # Keyword extraction
     keywords = extract_keywords(text)
 
-    # Resume feedback
     feedback = generate_feedback(missing_skills)
+
+    create_pdf(
+        best_role,
+        ai_prediction,
+        ats_score,
+        matched_skills,
+        missing_skills,
+        suggestions
+    )
 
     return render_template(
         "result.html",
@@ -93,6 +98,11 @@ def analyze():
         keywords=keywords,
         feedback=feedback
     )
+
+
+@app.route("/download")
+def download():
+    return send_file("resume_report.pdf", as_attachment=True)
 
 
 if __name__ == "__main__":
