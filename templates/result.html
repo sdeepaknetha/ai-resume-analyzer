@@ -25,6 +25,17 @@
 
 <p>{{ score }}%</p>
 
+<h2>🔥 Other Career Matches</h2>
+
+<ul>
+
+{% for r in top_roles[1:] %}
+<li>{{ r[0] }} — {{ r[1] }}%</li>
+
+{% endfor %}
+
+</ul>
+
 <h2>ATS Resume Score</h2>
 
 <p>{{ ats_score }}%</p>
