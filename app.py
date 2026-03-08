@@ -38,6 +38,8 @@ def analyze():
     missing_skills = []
     matched_skills = []
 
+    role_scores = []
+
     for role in job_roles:
 
         skills = job_roles[role]
@@ -45,6 +47,12 @@ def analyze():
         matches = [skill for skill in skills if skill.lower() in text]
 
         score = len(matches)
+
+        total_skills = len(skills)
+
+        percent = int((score / total_skills) * 100)
+
+        role_scores.append((role, percent, matches, [s for s in skills if s not in matches]))
 
         if score > best_score:
             best_score = score
@@ -77,6 +85,7 @@ def analyze():
 
 if __name__ == "__main__":
     app.run()
+
 
 
 
