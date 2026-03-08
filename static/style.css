@@ -68,3 +68,15 @@ color:white;
 .dark-mode .container{
 background:#1e1e1e;
 }
+
+.footer{
+margin-top:40px;
+padding:20px;
+text-align:center;
+font-size:14px;
+color:#777;
+}
+
+.dark-mode .footer{
+color:#ccc;
+}
