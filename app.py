@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from resume_parser import extract_text_from_resume
+from model import predict_role
 import json
 
 app = Flask(__name__)
@@ -31,6 +32,8 @@ def home():
 
 @app.route("/analyze", methods=["POST"])
 def analyze():
+
+    ai_prediction = predict_role(text)
 
     file = request.files["resume"]
 
@@ -86,3 +89,4 @@ def analyze():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
