@@ -15,12 +15,11 @@
 
 <h1>🚀 AI Resume Analyzer</h1>
 
-<!-- ADD DARK MODE BUTTON HERE -->
 <button onclick="toggleDarkMode()">🌙 Toggle Dark Mode</button>
 
 <p>Upload your resume and get AI powered career insights</p>
 
-<form action="/analyze" method="POST" enctype="multipart/form-data">
+<form action="/analyze" method="POST" enctype="multipart/form-data" onsubmit="showLoader()">
 
 <input type="file" name="resume" required>
 
@@ -30,9 +29,12 @@
 
 </form>
 
+<div id="loader" class="loader">
+Analyzing Resume... 🤖
 </div>
 
-<!-- ADD THIS BEFORE BODY CLOSE -->
+</div>
+
 <script src="/static/script.js"></script>
 
 </body>
