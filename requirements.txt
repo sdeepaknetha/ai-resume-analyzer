@@ -2,3 +2,6 @@ flask
 pdfplumber
 python-docx
 gunicorn
+scikit-learn
+pandas
+numpy
