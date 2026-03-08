@@ -1,8 +1,12 @@
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
 
+from chart_generator import create_skill_chart
+
 
 def create_pdf(role, ai_prediction, ats_score, matched, missing, suggestions):
+
+    chart_path = create_skill_chart(matched, missing)
 
     file_path = "resume_report.pdf"
 
@@ -11,7 +15,7 @@ def create_pdf(role, ai_prediction, ats_score, matched, missing, suggestions):
     y = 750
 
     c.setFont("Helvetica-Bold", 18)
-    c.drawString(200, y, "AI Resume Analysis Report")
+    c.drawString(180, y, "AI Resume Analysis Report")
 
     y -= 50
 
@@ -48,6 +52,11 @@ def create_pdf(role, ai_prediction, ats_score, matched, missing, suggestions):
     for s in suggestions:
         c.drawString(70, y, f"- {s}")
         y -= 15
+
+    y -= 40
+
+    # Insert chart image
+    c.drawImage(chart_path, 150, y - 200, width=300, height=200)
 
     c.save()
 
