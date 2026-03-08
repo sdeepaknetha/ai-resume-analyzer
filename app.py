@@ -4,18 +4,21 @@ import json
 
 app = Flask(__name__)
 
+# Load job roles
 with open("job_roles.json") as f:
     job_roles = json.load(f)
 
 
+# AI suggestion generator
 def generate_suggestion(skill):
 
     suggestions = {
         "node": "Learn Node.js for backend development",
         "django": "Learn Django framework",
-        "machine learning": "Study Machine Learning",
+        "machine learning": "Study Machine Learning basics",
         "data analysis": "Learn Pandas and NumPy",
-        "git": "Learn Git and GitHub"
+        "git": "Learn Git and GitHub for version control",
+        "bootstrap": "Learn Bootstrap for responsive design"
     }
 
     return suggestions.get(skill.lower(), f"Consider learning {skill}")
@@ -33,11 +36,6 @@ def analyze():
 
     text = extract_text_from_resume(file)
 
-    best_role = ""
-    best_score = 0
-    missing_skills = []
-    matched_skills = []
-
     role_scores = []
 
     for role in job_roles:
@@ -52,40 +50,39 @@ def analyze():
 
         percent = int((score / total_skills) * 100)
 
-        role_scores.append((role, percent, matches, [s for s in skills if s not in matches]))
+        missing = [s for s in skills if s not in matches]
 
-        if score > best_score:
-            best_score = score
-            best_role = role
-            matched_skills = matches
-            missing_skills = [s for s in skills if s not in matches]
+        role_scores.append((role, percent, matches, missing))
 
-    total = len(job_roles[best_role])
+    # Sort roles by score
+    role_scores.sort(key=lambda x: x[1], reverse=True)
 
-    match_score = int((best_score / total) * 100)
+    # Best role
+    best_role, match_score, matched_skills, missing_skills = role_scores[0]
 
+    # Top 3 roles
+    top_roles = role_scores[:3]
+
+    # ATS score
     ats_score = match_score + 10
 
     if ats_score > 100:
         ats_score = 100
 
+    # AI suggestions
     suggestions = [generate_suggestion(s) for s in missing_skills]
 
     return render_template(
-    "result.html",
-    role=best_role,
-    score=match_score,
-    ats_score=ats_score,
-    matched=matched_skills,
-    missing=missing_skills,
-    suggestions=suggestions
+        "result.html",
+        role=best_role,
+        score=match_score,
+        ats_score=ats_score,
+        matched=matched_skills,
+        missing=missing_skills,
+        suggestions=suggestions,
+        top_roles=top_roles
     )
-    
 
 
 if __name__ == "__main__":
-    app.run()
-
-
-
-
+    app.run(debug=True)
