@@ -17,6 +17,9 @@
 
 <h1>🧠 AI Resume Analysis</h1>
 
+<!-- ADD DARK MODE BUTTON HERE -->
+<button onclick="toggleDarkMode()">🌙 Toggle Dark Mode</button>
+
 <h2>Best Matched Role</h2>
 
 <p class="highlight">{{ role }}</p>
@@ -39,7 +42,6 @@
 
 {% for r in top_roles[1:] %}
 <li>{{ r[0] }} — {{ r[1] }}%</li>
-
 {% endfor %}
 
 </ul>
@@ -50,7 +52,6 @@
 
 {% for skill in matched %}
 <li>{{ skill }}</li>
-
 {% endfor %}
 
 </ul>
@@ -61,7 +62,6 @@
 
 {% for skill in missing %}
 <li>{{ skill }}</li>
-
 {% endfor %}
 
 </ul>
@@ -72,7 +72,6 @@
 
 {% for s in suggestions %}
 <li>{{ s }}</li>
-
 {% endfor %}
 
 </ul>
@@ -119,6 +118,9 @@ backgroundColor:["#4CAF50","#FF5252"]
 Download AI Report (PDF)
 </button>
 </a>
+
+<!-- ADD THIS BEFORE BODY CLOSE -->
+<script src="/static/script.js"></script>
 
 </body>
 </html>
